@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triângulo | Engenharia & Arquitetura</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- VARIÁVEIS CORPORATIVAS & RESET --- */
+        :root {
+            --bg-dark: #080c16;
+            --bg-surface: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --primary: #2563eb;
+            --primary-accent: #3b82f6;
+            --primary-glow: rgba(37, 99, 235, 0.18);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(59, 130, 246, 0.35);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMAÇÃO SCROLL REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: var(--transition);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- CABEÇALHO / NAVBAR --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(8, 12, 22, 0.82);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.1rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 1.5px;
+        }
+
+        .logo img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.4rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .btn-cta {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--primary-glow);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 12rem 8% 6rem;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 4rem;
+            min-height: 85vh;
+            background: radial-gradient(circle at 85% 15%, rgba(37, 99, 235, 0.1) 0%, transparent 60%);
+        }
+
+        .tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 30px;
+            color: #60a5fa;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 3.3rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1.2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #60a5fa, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            margin-bottom: 2.5rem;
+            max-width: 520px;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- CONTAINER DO GIF ANIMADO COM PARALLAX --- */
+        .hero-gif-container {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.2rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+        }
+
+        .hero-gif-container .gif-wrapper {
+            width: 100%;
+            height: 380px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-gif-container img.hero-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gif-caption {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gif-caption h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .gif-caption span {
+            font-size: 0.8rem;
+            color: var(--primary-accent);
+            background: rgba(37, 99, 235, 0.12);
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        /* --- SERVIÇOS --- */
+        .services {
+            padding: 7rem 8%;
+            background: #050811;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2.2rem;
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            background: var(--bg-card-hover);
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-accent);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* --- PORTFÓLIO DE OBRAS --- */
+        .portfolio {
+            padding: 7rem 8%;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
+        }
+
+        .portfolio-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .portfolio-card:hover img {
+            transform: scale(1.04);
+        }
+
+        .portfolio-body {
+            padding: 1.5rem;
+        }
+
+        .portfolio-body h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-body p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        /* --- LIDERANÇA TÉCNICA --- */
+        .leadership {
+            padding: 7rem 8%;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+            background: #050811;
+        }
+
+        .leader-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.2rem;
+            text-align: center;
+        }
+
+        .leader-avatar-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.2rem;
+            border: 3px solid var(--primary-accent);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
+            display: block;
+        }
+
+        /* --- CONTATO & CTA --- */
+        .cta-section {
+            padding: 7rem 8%;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.12) 0%, transparent 75%), var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4.5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-box h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 2.5rem 8%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- BOTÃO FLUTUANTE WHATSAPP --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            background: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+            text-decoration: none;
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- RESPONSIVIDADE MOBILE / TABLET --- */
+        @media (max-width: 900px) {
+            header {
+                padding: 1rem 5%;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 66px;
+                left: 0;
+                width: 100%;
+                background: rgba(8, 12, 22, 0.98);
+                backdrop-filter: blur(16px);
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                padding: 2rem 0;
+                border-bottom: 1px solid var(--border);
+                transform: translateY(-150%);
+                transition: var(--transition);
+            }
+
+            .nav-links.nav-active {
+                transform: translateY(0);
+            }
+
+            .hero, .leadership {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .hero {
+                padding: 8rem 5% 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+                text-align: center;
+            }
+
+            .hero-gif-container .gif-wrapper {
+                height: 280px;
+            }
+
+            .services, .portfolio, .leadership, .cta-section {
+                padding: 4rem 5%;
+            }
+
+            .section-header h2, .cta-box h2 {
+                font-size: 1.8rem;
+            }
+
+            .cta-box {
+                padding: 2.5rem 1.2rem;
+            }
+
+            .cta-box .btn-cta {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 0.8rem;
+                text-align: center;
+                padding: 2rem 5%;
+            }
+
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO / NAVBAR -->
+    <header>
+        <a href="#" class="logo">
+            <img src="fotos/logo.png" alt="Triângulo Engenharia & Arquitetura Logo">
+            <span>TRIÂNGULO</span>
+        </a>
+        
+        <button class="menu-toggle" id="mobile-menu" aria-label="Abrir Menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="#servicos" class="nav-item">Serviços</a></li>
+            <li><a href="#obras" class="nav-item">Portfólio</a></li>
+            <li><a href="#lideranca" class="nav-item">Liderança</a></li>
+            <li><a href="#contato" class="nav-item">Contato</a></li>
+        </ul>
+    </header>
+
+    <!-- HERO SECTION COM GIF -->
+    <section class="hero">
+        <div class="reveal">
+            <div class="tagline"><i class="fa-solid fa-shield-halved"></i> Engenharia & Arquitetura</div>
+            <h1>Rigor Técnico e <span>Eficiência</span> na Sua Obra.</h1>
+            <p>Transformamos investimentos imobiliários e residenciais com planejamento estratégico, controle rigoroso de execução e total conformidade técnica.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>+100</h3>
+                    <p>Projetos Executados</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Conformidade CREA</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Zero</h3>
+                    <p>Imprevistos Técnicos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GIF ANIMADO COM EFEITO PARALLAX NO SCROLL -->
+        <div class="hero-gif-container reveal" id="parallax-gif">
+            <div class="gif-wrapper">
+                <!-- Certifique-se de nomear seu arquivo GIF como 'animacao.gif' dentro da pasta 'fotos/' -->
+                <img src="fotos/animacao.gif" alt="Animação do Projeto Triângulo Engenharia" class="hero-gif">
+            </div>
+            <div class="gif-caption">
+                <h4>Inovação & Projeto em Movimento</h4>
+                <span>Visualização 3D</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="services" id="servicos">
+        <div class="section-header reveal">
+            <h2>Soluções Corporativas Integradas</h2>
+            <p>Atuação completa em projetos, execução e regularização imobiliária para garantir segurança técnica e financeira.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                <h3>Projetos & Arquitetura</h3>
+                <p>Desenvolvimento de projetos arquitetônicos e estruturais otimizados, unindo estética e viabilidade construtiva.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-building-user"></i></div>
+                <h3>Construções & Reformas</h3>
+                <p>Gestão e acompanhamento integral de obras residenciais e comerciais com rigoroso controle de prazos e custos.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-file-contract"></i></div>
+                <h3>Regularização de Imóveis</h3>
+                <p>Aprovação legal, licenças urbanísticas e adequação de documentação junto aos órgãos competentes.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h3>Eng. de Segurança do Trabalho</h3>
+                <p>Consultoria técnica especializada e gestão de riscos operacionais para canteiros de obras e empresas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFÓLIO DE OBRAS / PROJETOS -->
+    <section class="portfolio" id="obras">
+        <div class="section-header reveal">
+            <h2>Projetos & Acompanhamentos</h2>
+            <p>Conheça um pouco do nosso padrão de entrega em arquitetura, interiores e engenharia civil.</p>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-card reveal">
+                <img src="fotos/projeto_interiores.jpg" alt="Projeto de Interiores e Arquitetura">
+                <div class="portfolio-body">
+                    <h4>Projetos de Interiores & Arquitetura</h4>
+                    <p>Planejamento inteligente de espaços corporativos e residenciais com alto nível de acabamento.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-card reveal">
+                <img src="fotos/projeto_construcao.jpg" alt="Acompanhamento e Execução de Obras">
+                <div class="portfolio-body">
+                    <h4>Gestão e Execução de Obras</h4>
+                    <p>Controle rigoroso de insumos, cronograma e normas técnicas de engenharia civil.</p>
+                </div>
+            </div>
+
+            <div class="portfolio-card reveal">
+                <img src="fotos/destaque_empresa.jpg" alt="Atuação da Triângulo Engenharia">
+                <div class="portfolio-body">
+                    <h4>Conformidade e Regularização</h4>
+                    <p>Soluções completas em Engenharia de Segurança e regularização imobiliária.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIDERANÇA TÉCNICA -->
+    <section class="leadership" id="lideranca">
+        <div class="leader-card reveal">
+            <img src="fotos/marlon_lopes.jpg" alt="Eng. Marlon Lopes" class="leader-avatar-img">
+            <h3 style="font-size: 1.25rem;">Marlon Lopes</h3>
+            <p style="color: var(--primary-accent); font-size: 0.88rem; font-weight: 600; margin-bottom: 0.4rem;">Engenheiro Responsável</p>
+            <p style="color: var(--text-muted); font-size: 0.82rem;">@eng_triangulo</p>
+        </div>
+
+        <div class="reveal">
+            <div class="tagline">Liderança Técnica</div>
+            <h2 style="font-size: 2rem; margin-bottom: 1.2rem;">Acompanhamento Profissional do Início ao Fim</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">A sua obra é um investimento valioso. Cada decisão influencia a segurança e a valorização do imóvel. Com o acompanhamento da Triângulo Engenharia & Arquitetura, você ganha mais segurança, transparência e eficiência em cada etapa.</p>
+            <a href="https://wa.me/5591980263200" target="_blank" class="btn-cta">
+                <i class="fa-brands fa-whatsapp"></i> Solicitar Análise de Projeto
+            </a>
+        </div>
+    </section>
+
+    <!-- CTA CONTATO -->
+    <section class="cta-section" id="contato">
+        <div class="cta-box reveal">
+            <h2>Pronto para tirar o seu projeto do papel?</h2>
+            <p>Fale diretamente com o nosso engenheiro responsável e solicite um orçamento personalizado.</p>
+            <a href="https://wa.me/5591980263200" target="_blank" class="btn-cta" style="padding: 0.9rem 2rem; font-size: 1rem;">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Atendimento via WhatsApp: (91) 98026-3200
+            </a>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div>
+            <strong>TRIÂNGULO Engenharia & Arquitetura</strong> © 2026. Todos os direitos reservados.
+        </div>
+        <div>
+            Belém / Pará • CREA Ativo
+        </div>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+    <a href="https://wa.me/5591980263200" target="_blank" class="whatsapp-float" title="Falar no WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- SCRIPT DE INTERAÇÃO, REVELAÇÃO E EFEITO DE SCROLL NO GIF -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Animação Reveal no Scroll
+            const reveals = document.querySelectorAll(".reveal");
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                reveals.forEach((el) => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementVisible = 100;
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add("active");
+                    }
+                });
+            };
+
+            // Efeito Parallax no GIF conforme scroll na primeira visão
+            const parallaxGif = document.getElementById("parallax-gif");
+            const handleScrollEffects = () => {
+                revealOnScroll();
+
+                const scrolled = window.scrollY;
+                if (window.innerWidth > 900 && scrolled < window.innerHeight) {
+                    parallaxGif.style.transform = `translateY(${scrolled * 0.12}px)`;
+                } else if (parallaxGif) {
+                    parallaxGif.style.transform = "none";
+                }
+            };
+
+            window.addEventListener("scroll", handleScrollEffects);
+            handleScrollEffects();
+
+            // Menu Hambúrguer Mobile
+            const menuToggle = document.getElementById("mobile-menu");
+            const navList = document.getElementById("nav-list");
+            const navItems = document.querySelectorAll(".nav-item");
+
+            menuToggle.addEventListener("click", () => {
+                navList.classList.toggle("nav-active");
+                const icon = menuToggle.querySelector("i");
+                if (navList.classList.contains("nav-active")) {
+                    icon.classList.remove("fa-bars");
+                    icon.classList.add("fa-xmark");
+                } else {
+                    icon.classList.remove("fa-xmark");
+                    icon.classList.add("fa-bars");
+                }
+            });
+
+            // Fechar menu mobile ao clicar em um link
+            navItems.forEach(item => {
+                item.addEventListener("click", () => {
+                    navList.classList.remove("nav-active");
+                    const icon = menuToggle.querySelector("i");
+                    icon.classList.remove("fa-xmark");
+                    icon.classList.add("fa-bars");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
