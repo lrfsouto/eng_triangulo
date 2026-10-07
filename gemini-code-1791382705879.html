@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triângulo | Engenharia & Arquitetura</title>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- RESET & VARIÁVEIS CORPORATIVAS --- */
+        :root {
+            --bg-dark: #0a0f1d;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- ANIMAÇÕES DE REVELAÇÃO (SCROLL REVEAL) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- NAU / HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 15, 29, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        .logo-symbol {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            display: inline-block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .btn-cta {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--primary-glow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-cta:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 11rem 8% 6rem;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 4rem;
+            min-height: 85vh;
+            background: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 50%);
+        }
+
+        .tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            border-radius: 20px;
+            color: #60a5fa;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            background: linear-gradient(90deg, #60a5fa, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            max-width: 540px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .hero-card-preview {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .quote-box {
+            border-left: 3px solid var(--primary);
+            padding-left: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .quote-box p {
+            font-style: italic;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        /* --- SERVIÇOS (MINIMAL CARDS) --- */
+        .services {
+            padding: 6rem 8%;
+            background: #070b16;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* --- LIDERANÇA TÉCNICA --- */
+        .leadership {
+            padding: 6rem 8%;
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .leader-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .leader-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--bg-card-hover);
+            margin: 0 auto 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+            font-size: 2.5rem;
+            color: var(--text-muted);
+        }
+
+        /* --- CONTACTO / CTA --- */
+        .cta-section {
+            padding: 6rem 8%;
+            background: linear-gradient(180deg, #070b16 0%, var(--bg-dark) 100%);
+            text-align: center;
+        }
+
+        .cta-box {
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 70%), var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-box h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 2rem 8%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- BOTÃO FLUTUANTE WHATSAPP --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 58px;
+            height: 58px;
+            background: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+            text-decoration: none;
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 900px) {
+            .hero, .leadership {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="logo">
+            <span class="logo-symbol"></span>
+            <span>TRIÂNGULO</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#diferenciais">Diferenciais</a></li>
+            <li><a href="#lideranca">Liderança</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <a href="https://wa.me/5591980263200" target="_blank" class="btn-cta">Falar com Engenheiro</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="reveal">
+            <div class="tagline"><i class="fa-solid fa-shield-halved"></i> Engenharia & Arquitetura</div>
+            <h1>Rigor Técnico e <span>Eficiência</span> na Sua Obra.</h1>
+            <p>Transformamos investimentos imobiliários e residenciais com planeamento estratégico, controlo rigoroso de execução e total conformidade técnica.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>+100</h3>
+                    <p>Projetos Executados</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Conformidade CREA</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Zero</h3>
+                    <p>Desperdício Imprevisto</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-card-preview reveal">
+            <div class="logo-symbol" style="margin-bottom: 1rem;"></div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Engenharia de Valor</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Cada detalhe previsto em projeto reduz imprevistos, aumenta a eficiência e garante a máxima valorização patrimonial.</p>
+            
+            <div class="quote-box">
+                <p>"O que parece detalhe no projeto representa economia real durante toda a obra."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="services" id="servicos">
+        <div class="section-header reveal">
+            <h2>Soluções Corporativas Integradas</h2>
+            <p>Atuação completa em projetos, execução e regularização imobiliária para garantir segurança e previsibilidade financeira.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                <h3>Projetos & Arquitetura</h3>
+                <p>Desenvolvimento de projetos arquitetónicos e estruturais otimizados, combinando estética contemporânea e viabilidade construtiva.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-building-user"></i></div>
+                <h3>Construções & Reformas</h3>
+                <p>Gestão e acompanhamento integral de obras residenciais e comerciais com rigoroso controlo de prazos e custos.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-file-contract"></i></div>
+                <h3>Regularização de Imóveis</h3>
+                <p>Aprovação legal, licenças urbanísticas e adequação de documentação junto dos órgãos competentes.</p>
+            </div>
+
+            <div class="service-card reveal">
+                <div class="service-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h3>Eng. de Segurança do Trabalho</h3>
+                <p>Consultoria técnica especializada e planos de gestão de riscos para estaleiros de obras e empreendimentos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIDERANÇA TÉCNICA -->
+    <section class="leadership" id="lideranca">
+        <div class="leader-card reveal">
+            <div class="leader-avatar">
+                <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <h3 style="font-size: 1.2rem;">Marlon Lopes</h3>
+            <p style="color: var(--primary); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">Engenheiro Responsável</p>
+            <p style="color: var(--text-muted); font-size: 0.82rem;">@eng_triangulo</p>
+        </div>
+
+        <div class="reveal">
+            <div class="tagline">Compromisso Técnico</div>
+            <h2 style="font-size: 2rem; margin-bottom: 1.2rem;">Acompanhamento Profissional de Ponta a Ponta</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">A sua obra é um investimento valioso. Cada decisão influencia diretamente a qualidade final e o custo total. Com o acompanhamento da Triângulo, obtém total controlo, segurança jurídica e máxima qualidade em todas as etapas.</p>
+            <a href="https://wa.me/5591980263200" target="_blank" class="btn-cta">Solicitar Análise Técnica</a>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-section" id="contacto">
+        <div class="cta-box reveal">
+            <h2>Pronto para iniciar o seu projeto com segurança?</h2>
+            <p>Entre em contacto diretamente com a nossa equipa de engenharia e agende uma consultoria inicial.</p>
+            <a href="https://wa.me/5591980263200" target="_blank" class="btn-cta" style="padding: 0.9rem 2rem; font-size: 1rem;">
+                <i class="fa-brands fa-whatsapp" style="margin-right: 8px;"></i> (91) 98026-3200
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <strong>TRIÂNGULO</strong> Engenharia & Arquitetura © 2026. Todos os direitos reservados.
+        </div>
+        <div>
+            Belém / Pará • CREA Ativo
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT BUTTON -->
+    <a href="https://wa.me/5591980263200" target="_blank" class="whatsapp-float" title="Falar no WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- SCRIPT DE REVELAÇÃO SUAVE (SCROLL REVEAL) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                reveals.forEach((el) => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementVisible = 100;
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add("active");
+                    }
+                });
+            };
+
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll(); // Executar na inicialização
+        });
+    </script>
+</body>
+</html>
